@@ -1,0 +1,27 @@
+server:
+  port: 9090
+
+#application Name
+spring:
+  application:
+    name: 08-VERIFICATION-SERVICE
+
+#oracle configuration
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/orcl
+    username: system
+    password: manager
+    driver-class-name: oracle.jdbc.OracleDriver
+
+#jpa configuration
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+#user define property
+notification:
+  enabled: false
