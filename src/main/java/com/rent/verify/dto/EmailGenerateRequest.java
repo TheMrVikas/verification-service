@@ -12,6 +12,7 @@ import lombok.Data;
  */
 @Data
 public class EmailGenerateRequest {
+	private String userUid; 
 	@NotBlank(message = "email is mandatory")
 	@Email(message = "email should be correct")
 	private String email;

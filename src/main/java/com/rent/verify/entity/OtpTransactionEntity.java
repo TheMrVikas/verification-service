@@ -22,26 +22,34 @@ import lombok.Setter;
  * @created on 26 Dec 2025
  * @version 1.0
  */
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name = "OTP_TRANSACTION",
        indexes = {
-         @Index(name = "IDX_OTP_MOBILE", columnList = "MOBILE_NUMBER"),
-         @Index(name = "IDX_OTP_STATUS", columnList = "STATUS")
+           @Index(name = "IDX_OTP_USER", columnList = "USER_UID"),
+           @Index(name = "IDX_OTP_MOBILE", columnList = "MOBILE_NUMBER")
        })
-public class OtpTransactionEntity {
-	@Id
+public class OtpTransactionEntity extends AuditableEntity {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false)
     private Long id;
 
-	@Column(unique = true)
+    @Column(name = "USER_UID")
+    private String userUid;
+
+    @Column(name = "MOBILE_NUMBER")
     private String mobileNumber;
+
+    @Column(nullable = false)
     private String otp;
 
-    @Enumerated(EnumType.STRING)
-    private OtpStatus status;
-
+    @Column(name = "EXPIRES_AT", nullable = false)
     private LocalDateTime expiresAt;
-    private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OtpStatus status;
 }

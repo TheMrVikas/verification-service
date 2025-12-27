@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.rent.verify.entity.EmailVerification;
+import com.rent.verify.enums.EmailStatus;
 
 /**
  * Description: this class is responsible for TODO
@@ -27,16 +28,26 @@ public interface EmailVerificationRepository extends JpaRepository<EmailVerifica
 	 * @param email
 	 * @return
 	 * TODO
-	 * boolean
-	 */
-	boolean existsByEmailAndVerifiedTrue(String email);
-	/**
-	 * 
-	 * @param email
-	 * @return
-	 * TODO
 	 * List<EmailVerification>
 	 */
 	List<EmailVerification> findByEmail(String email);
-	
+	/**
+	 * 
+	 * @param userUid
+	 * @param email
+	 * @return
+	 * TODO
+	 * Optional<EmailVerification>
+	 */
+	Optional<EmailVerification> findTopByUserUidAndEmailOrderByIdDesc(String userUid, String email);
+	/**
+	 * 
+	 * @param userUid
+	 * @param status
+	 * @return
+	 * TODO
+	 * Optional<EmailVerification>
+	 */
+	Optional<EmailVerification> findTopByUserUidAndStatusOrderByIdDesc(String userUid, EmailStatus status);
+
 }

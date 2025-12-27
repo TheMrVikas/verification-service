@@ -1,5 +1,6 @@
 package com.rent.verify.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -10,6 +11,8 @@ import lombok.Data;
  */
 @Data
 public class OtpVerifyRequest {
-    private String mobile;
-    private String otp;
+	@NotNull(message = "USER ID CAN NOT BLANK")
+	private String userUid;
+	private String mobile;
+	private String otp;
 }

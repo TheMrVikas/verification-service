@@ -23,7 +23,7 @@ public interface OtpTransactionRepository extends JpaRepository<OtpTransactionEn
 	 * TODO
 	 * OtpTransactionEntity
 	 */
-	Optional<OtpTransactionEntity> findTopByMobileNumberOrderByCreatedAtDesc(String mobile);
+	Optional<OtpTransactionEntity> findTopByUserUidAndOtpOrderByIdDesc(String userUid, String otp);
 	/**
 	 * 
 	 * @param mobile
@@ -32,5 +32,26 @@ public interface OtpTransactionRepository extends JpaRepository<OtpTransactionEn
 	 * TODO
 	 * boolean
 	 */
-	boolean existsByMobileNumberAndStatus(String mobile, OtpStatus status);
+	boolean existsByMobileNumberAndUserUid(String mobile, String userid);
+	/**
+	 * 
+	 * @param userUid
+	 * @param status
+	 * @return
+	 * TODO
+	 * Optional<OtpTransactionEntity>
+	 */
+	Optional<OtpTransactionEntity> findTopByUserUidAndStatusOrderByIdDesc(String userUid, OtpStatus status);
+	/**
+	 * 
+	 * @param userid
+	 * @param mob
+	 * @return
+	 * TODO
+	 * Optional<OtpTransactionEntity>
+	 */
+	Optional<OtpTransactionEntity> findTopByUserUidAndMobileNumberOrderByIdDesc(String userid, String mob);
+	
+	Optional<OtpTransactionEntity> findTopByUserUidOrderByIdDesc(String userid);
+
 }

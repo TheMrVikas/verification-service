@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class EmailVerifyRequest {
+	private String userUid;
 	@NotBlank(message = "please enter valid token")
     private String token;
 }
