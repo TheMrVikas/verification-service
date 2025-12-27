@@ -23,7 +23,7 @@ public interface OtpTransactionRepository extends JpaRepository<OtpTransactionEn
 	 * TODO
 	 * OtpTransactionEntity
 	 */
-	Optional<OtpTransactionEntity> findOtpByMobileNumberOrderByIdDesc(String mobile);
+	Optional<OtpTransactionEntity> findTopByMobileNumberOrderByCreatedAtDesc(String mobile);
 	/**
 	 * 
 	 * @param mobile

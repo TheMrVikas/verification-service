@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.rent.verify.entity.OtpTransactionEntity;
 import com.rent.verify.enums.OtpStatus;
+import com.rent.verify.exception.VerificationException;
 import com.rent.verify.repository.OtpTransactionRepository;
 import com.rent.verify.service.OtpVerificationService;
 
@@ -28,17 +29,17 @@ public class OtpVerificationServiceImpl implements OtpVerificationService {
 	@Override
 	public void verifyOtp(String mobile, String otp) {
 
-		OtpTransactionEntity tx = otpRepo.findOtpByMobileNumberOrderByIdDesc(mobile)
-				.orElseThrow(() -> new RuntimeException("OTP not found"));
+		OtpTransactionEntity tx = otpRepo.findTopByMobileNumberOrderByCreatedAtDesc(mobile)
+				.orElseThrow(() -> new VerificationException("OTP not found"));
 
 		if (tx.getExpiresAt().isBefore(LocalDateTime.now())) {
 			tx.setStatus(OtpStatus.EXPIRED);
 			otpRepo.save(tx);
-			throw new RuntimeException("OTP expired");
+			throw new VerificationException("OTP expired");
 		}
 
 		if (!tx.getOtp().equals(otp)) {
-			throw new RuntimeException("Invalid OTP");
+			throw new VerificationException("Invalid OTP");
 		}
 
 		tx.setStatus(OtpStatus.VERIFIED);
