@@ -1,5 +1,6 @@
 package com.rent.verify.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
@@ -10,5 +11,6 @@ import lombok.Data;
  */
 @Data
 public class EmailVerifyRequest {
+	@NotBlank(message = "please enter valid token")
     private String token;
 }

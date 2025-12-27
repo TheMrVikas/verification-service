@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 /**
@@ -59,7 +60,7 @@ public class VerificationController {
 						@ApiResponse(responseCode = "400", description = "Invalid request data"),
 						@ApiResponse(responseCode = "500", description = "Internal server error") })
 		@PostMapping(value = "/email/verify",produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<String> verifyEmail(@RequestBody EmailVerifyRequest request) {
+		public ResponseEntity<String> verifyEmail(@Valid @RequestBody EmailVerifyRequest request) {
 			emailService.verifyEmail(request.getToken());
 			return ResponseEntity.ok("Email verified");
 		}

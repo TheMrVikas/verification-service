@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 /**
@@ -40,7 +41,7 @@ public class EmailAndOTPGenerationController {
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "email sent successfully"),
 					@ApiResponse(responseCode = "400", description = "Invalid request data"),
 					@ApiResponse(responseCode = "500", description = "Internal server error") })
-	public ResponseEntity<String> generateEmail(@RequestBody EmailGenerateRequest request) {
+	public ResponseEntity<String> generateEmail(@Valid @RequestBody EmailGenerateRequest request) {
 
 		emailGenerationService.generateOrResendEmailVerification(request.getEmail());
 

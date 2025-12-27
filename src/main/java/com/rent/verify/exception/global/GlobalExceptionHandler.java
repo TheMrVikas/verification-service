@@ -1,7 +1,12 @@
 package com.rent.verify.exception.global;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -34,6 +39,18 @@ public class GlobalExceptionHandler {
 				HttpStatus.INTERNAL_SERVER_ERROR.value());
 
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ApiErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+
+		String errorMessage = ex.getBindingResult().getFieldErrors().stream().findFirst()
+				.map(FieldError::getDefaultMessage).orElse("Validation failed");
+
+		ApiErrorResponse response = new ApiErrorResponse(errorMessage, "VALIDATION_ERROR",
+				HttpStatus.BAD_REQUEST.value(), LocalDateTime.now());
+
+		return ResponseEntity.badRequest().body(response);
 	}
 }
     
